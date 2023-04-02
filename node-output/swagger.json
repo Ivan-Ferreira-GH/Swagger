@@ -1,24 +1,24 @@
 {
   "openapi" : "3.0.0",
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/IVANFERREIRA/HelloWorld/1.17.0"
+  }, {
+    "description" : "Hello World Test API",
+    "url" : "https://virtserver.swaggerhub.com/HelloWorld/1.17.0"
+  } ],
   "info" : {
-    "title" : "Hello World API",
     "description" : "Esta es una API para demostración",
+    "version" : "1.17.0",
+    "title" : "Hello World API",
     "contact" : {
       "email" : "hello.world@arahant.life"
     },
     "license" : {
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version" : "1.17.0"
+    }
   },
-  "servers" : [ {
-    "url" : "https://virtserver.swaggerhub.com/IVANFERREIRA/HelloWorld/1.17.0",
-    "description" : "SwaggerHub API Auto Mocking"
-  }, {
-    "url" : "https://virtserver.swaggerhub.com/HelloWorld/1.17.0",
-    "description" : "Hello World Test API"
-  } ],
   "tags" : [ {
     "name" : "admins",
     "description" : "Peticiones asegurdads exclusivas para administradores"
@@ -31,42 +31,34 @@
       "get" : {
         "tags" : [ "developers" ],
         "summary" : "Buscan en el inventario",
-        "description" : "Con los argumentos apropiados, puede buscar ítems la disponibilidad de ítems en el inventario\n",
         "operationId" : "searchInventory",
+        "description" : "Con los argumentos apropiados, puede buscar ítems la disponibilidad de ítems en el inventario\n",
         "parameters" : [ {
-          "name" : "searchString",
           "in" : "query",
+          "name" : "searchString",
           "description" : "puede agregar una palabra de búsqueda opcional para buscar en el inventario",
           "required" : false,
-          "style" : "form",
-          "explode" : true,
           "schema" : {
             "type" : "string"
           }
         }, {
-          "name" : "skip",
           "in" : "query",
+          "name" : "skip",
           "description" : "número de registros a saltear para la paginación",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
           "schema" : {
-            "minimum" : 0,
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "minimum" : 0
           }
         }, {
-          "name" : "limit",
           "in" : "query",
+          "name" : "limit",
           "description" : "límite del número máximo de resultados",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
           "schema" : {
-            "maximum" : 50,
-            "minimum" : 0,
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "minimum" : 0,
+            "maximum" : 50
           }
         } ],
         "responses" : {
@@ -91,18 +83,8 @@
       "post" : {
         "tags" : [ "admins" ],
         "summary" : "Agrega un ítem al inventario",
-        "description" : "Agrega el ítem especificado al sistema de inventario",
         "operationId" : "addInventory",
-        "requestBody" : {
-          "description" : "Item de inventario a ser agregado",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/InventoryItem"
-              }
-            }
-          }
-        },
+        "description" : "Agrega el ítem especificado al sistema de inventario",
         "responses" : {
           "201" : {
             "description" : "ítem creado"
@@ -113,6 +95,16 @@
           "409" : {
             "description" : "el ítem ya existe"
           }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/InventoryItem"
+              }
+            }
+          },
+          "description" : "Item de inventario a ser agregado"
         }
       }
     }
@@ -120,8 +112,8 @@
   "components" : {
     "schemas" : {
       "InventoryItem" : {
-        "required" : [ "id", "manufacturer", "name", "releaseDate" ],
         "type" : "object",
+        "required" : [ "id", "name", "manufacturer", "releaseDate" ],
         "properties" : {
           "id" : {
             "type" : "string",
@@ -144,7 +136,6 @@
       },
       "Manufacturer" : {
         "required" : [ "name" ],
-        "type" : "object",
         "properties" : {
           "name" : {
             "type" : "string",
@@ -159,7 +150,8 @@
             "type" : "string",
             "example" : "+595 991 555 555"
           }
-        }
+        },
+        "type" : "object"
       }
     }
   }
